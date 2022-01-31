@@ -1,0 +1,19 @@
+<% @books.each do |book| %>
+    <div class="container" id="book-card">
+        <div class="card text-center">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"><%= book.name%></h5>
+                <p class="card-text">Author: <%= book.author%></p>
+                <p class="card-text">Number Of Copies: <%= book.number_of_copies%></p>
+                <%= link_to "Show", book_path(book),class:"btn btn-primary"%>
+                <%= link_to "Edit", edit_book_path(book), class:"btn btn-primary"%>
+                <%= link_to "Delete", book_path(book), method: :delete,class:"btn btn-primary" %>
+            </div>
+            <div class="card-footer text-muted">
+            <small>Added <%= time_ago_in_words(book.created_at) %> ago</small
+            </div>
+        </div>
+    </div>
+<% end%>
