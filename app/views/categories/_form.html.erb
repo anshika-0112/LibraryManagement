@@ -1,0 +1,21 @@
+<div class="mb-3">
+    <%= form_for @category do |f| %>
+        <% if @category.errors.any?%>
+            <ul>
+                <% @category.errors.full_messages.each do |msg|%>
+                    <li><%=msg%></l1>
+                <% end%>
+            </ul>
+        <% end%>
+        <div>
+            <%= f.label :name, style:"display:block", class:"form-label label-text"%>
+            <%= f.text_field :name, class:"form-control", id:"exampleFormControlTextarea1"%>
+        </div>
+
+        <div>
+            <%= f.submit class:"btn btn-dark btn-block mt-4"%>
+        </div>
+
+        <%= link_to "Back to Categories", categories_path,class:"btn btn-dark btn-block mt-4"%>
+    <% end %>
+</div>
