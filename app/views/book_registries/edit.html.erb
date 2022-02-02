@@ -1,0 +1,25 @@
+<h1>Approve Request</h1>
+<div class="mb-3">
+    <%= form_for @book_registry do |f|%>
+        <% if @book_registry.errors.any?%>
+            <ul>
+                <% @book_registry.errors.full_messages.each do |msg|%>
+                    <li><%=msg%></l1>
+                <% end%>
+            </ul>
+        <% end%>
+        <div>
+            <%= f.label :book_taken_date, style:"display:block", class:"form-label"%>
+            <%= f.datetime_field :book_taken_date, class:"form-control", id:"exampleFormControlTextarea1"%>
+        </div>
+
+        <div>
+            <%= f.label :book_return_date, style:"display:block", class:"form-label"%>
+            <%= f.datetime_field :book_return_date, class:"form-control", id:"exampleFormControlTextarea1"%>
+        </div>
+
+        <div>
+            <%= f.submit class:"btn btn-dark btn-block mt-4 text-center"%>
+        </div>
+    <% end %>
+</div>

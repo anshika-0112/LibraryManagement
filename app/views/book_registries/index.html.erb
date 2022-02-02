@@ -1,0 +1,13 @@
+<h1>Issue Requests</h1>
+<% if @book_requests.count>0 %>
+<ul class="list-group list-group-flush">
+    <% @book_requests.each do |req|%>
+        <li class="list-group-item"><%= User.find(req.user_id).name%> is requesting for Book <%= Book.find(req.book_id).name%>
+            <%= link_to "Approve", edit_book_registry_path(req), class:"btn btn-primary"%>
+            <%= link_to "Reject", book_registry_path(req), method: :delete,class:"btn btn-primary"%>
+        </li>
+    <%end%>
+</ul>
+<%else%>
+    <h3>No Issue Requests for Now</h3>
+<%end%>

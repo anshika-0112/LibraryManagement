@@ -2,6 +2,7 @@ class BooksController < ApplicationController
     before_action :set_book, only:[:show,:destroy,:edit,:update]
     before_action :authenticate_user!, except:[:index]
     def show
+        @book_registry=BookRegistry.find_by(user_id: current_user.id,book_id: @book.id)
     end
 
     def index

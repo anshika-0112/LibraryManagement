@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_095927) do
   create_table "book_registries", force: :cascade do |t|
     t.integer "book_id"
     t.integer "user_id"
-    t.datetime "book_taken_date", default: "2022-02-01 10:31:57"
-    t.datetime "book_return_date", default: "2022-02-11 10:31:57"
+    t.datetime "book_taken_date"
+    t.datetime "book_return_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

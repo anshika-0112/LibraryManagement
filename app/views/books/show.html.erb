@@ -1,6 +1,19 @@
 <h1>Book Details</h1>
 <p><strong>Name: </strong><%=@book.name%></p>
 <p><strong>Author: </strong><%=@book.author%></p>
+<% if @book.number_of_copies>0 %>
+    <% if !isRequested? %>
+        <p>Book is available. You can request to issue the book</p>
+        <%= link_to "Request Book Issue",book_registries_path(book_id:@book) ,method: :post,id: @book%>
+    <%elsif isIssued?%>
+        <p>Your request to issue the book is approved by admin. Kindly reurn before <%= @book_registry.book_return_date%></p>
+        <%= link_to "Return Book", book_registry_path(@book_registry), method: :delete%>
+    <%else%>
+        <p>You have already requested to issue this book.Wait for admin to approve it</p>
+    <%end%>
+<%else%>
+    <p>Book is out of stock try after some time</p>
+<%end%>
 <%= link_to "Edit", edit_book_path(@book), class:"btn btn-primary"%>
 <%= link_to "Delete", book_path(@book), method: :delete,class:"btn btn-primary" %>
 <%= link_to "Back to Books", path=books_path %>
