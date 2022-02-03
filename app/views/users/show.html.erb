@@ -1,0 +1,6 @@
+<h1><%= @user.name %></h1>
+<h5><%= @user.email%></h5>
+<% if user_signed_in? && (@user==current_user || current_user.user_type=="Admin") %>
+        <%= link_to "Edit", edit_user_registration_path(@user), class:"btn btn-primary"%>
+        <%= link_to "delete", user_path(@user), method: :delete %> 
+<%end%>

@@ -1,7 +1,7 @@
 class BookRegistriesController < ApplicationController
-
-    def new
-    end
+    before_action :set_book_registry, only:[:destroy,:edit,:update]
+    before_action :authenticate_user!
+    before_action :require_admin,except:[:create,:show,:new,:destroy,:index]
 
     def create
         @book= Book.find(params[:book_id])
@@ -11,7 +11,7 @@ class BookRegistriesController < ApplicationController
                 @book.update(number_of_copies:@book.number_of_copies-1)
                 @book_registry.save
                 flash[:notice]="Request to Issue this Book is placed successfully"
-                redirect_to @book_registry
+                redirect_to book_registries_path
             else
                 flash.now[:alert]="You have already requested to issue this book"
                 render :show
@@ -24,14 +24,13 @@ class BookRegistriesController < ApplicationController
 
     def index
         @book_requests= BookRegistry.where(book_return_date: nil)
+        @user_book_requests=BookRegistry.where(user_id: current_user.id)
     end
 
     def edit
-        @book_registry=BookRegistry.find(params[:id])
     end
 
     def update
-        @book_registry=BookRegistry.find(params[:id])
         if @book_registry.update(params.require(:book_registry).permit(:book_taken_date,:book_return_date))
             flash[:notice]="Book Request Approved"
             redirect_to @book_registry
@@ -41,7 +40,6 @@ class BookRegistriesController < ApplicationController
     end
 
     def destroy
-        @book_registry=BookRegistry.find(params[:id])
         @book=Book.find(@book_registry.book_id)
         @book_registry.destroy
         if @book_registry.book_return_date.nil?
@@ -51,5 +49,18 @@ class BookRegistriesController < ApplicationController
         end
         redirect_to books_path
         @book.update(number_of_copies:@book.number_of_copies+1)
+    end
+
+    private
+
+    def set_book_registry
+        @book_registry=BookRegistry.find(params[:id])
+    end
+
+    def require_admin
+        if current_user.user_type!="Admin"
+            flash[:alert]="Only Admins are allowed to perform this action"
+            redirect_to books_path
+        end
     end
 end
